@@ -1,4 +1,8 @@
-[Oo]bj/**
+# Don't commit build folders
+build/
+
+# 
+obj/**
 
 # Prerequisites
 *.d

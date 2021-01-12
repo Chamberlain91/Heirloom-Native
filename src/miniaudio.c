@@ -1,3 +1,6 @@
+#include <stdlib.h>
+#include <stdio.h>
+
 /* -- stb vorbis -- */
 #define STB_VORBIS_NO_STDIO /* .ogg audio */
 #define STB_VORBIS_HEADER_ONLY
@@ -17,13 +20,11 @@
 #define MINIAUDIO_IMPLEMENTATION
 #include "miniaudio/miniaudio.h" /* Audio System */
 
-#include <stdio.h>
-
 // -- miniaudio extensions (used for bindings in csharp) -- //
-#define ma_ext_create(t) (t *)ma_aligned_malloc(sizeof(t), MA_SIMD_ALIGNMENT);
+#define ma_ext_create(t) (t *)ma_malloc(sizeof(t), NULL);
 
 // free structures allocated below
-void ma_ext_free(void *ptr) { return ma_aligned_free(ptr); }
+void ma_ext_free(void *ptr) { ma_aligned_free(ptr, NULL); }
 
 // allocate the memory needed for a decoder struct
 void *ma_ext_alloc_decoder() { return ma_ext_create(ma_decoder); }
@@ -35,7 +36,7 @@ void *ma_ext_alloc_device() { return ma_ext_create(ma_device); }
 ma_device_config *ma_ext_alloc_device_config(ma_device_type deviceType, ma_uint32 sampleRate, ma_device_callback_proc dataCallback)
 {
     ma_device_config *config = ma_ext_create(ma_device_config);
-    ma_zero_object(config);
+    MA_ZERO_OBJECT(config);
 
     // Configure device type and callback
     config->dataCallback = dataCallback;

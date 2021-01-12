@@ -2,18 +2,24 @@
 
 Build project for native libraries used by Heirloom.
 
-## Build Windows
-```
-mingw32-make.exe
+**Note:** These scripts assume Ninja build system is available. Additionally, these scripts require an environment variable named `ANDROID_NDK` to be pointed to the specific NDK directory such as `path/to/android/ndk/21.3.6528147/`.
+
+### Build for Windows
+```bat
+./build_windows.bat
 ```
 
-## Build Linux & macOS
-```
-make
+### Build for Linux
+```sh
+./build_linux.sh
 ```
 
-## Build Android
+### Build for Android
+The script for building Android assumes the SDK/NDK is running on a Windows platform.
+```bat
+./build_android.bat
 ```
-cd android
-ndk-build APP_PLATFORM=android-22
-```
+
+## TODO
+
+* Statically link GLFW and rename project so the lib is named `Heirloom.Native.dll`
