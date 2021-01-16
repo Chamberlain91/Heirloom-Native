@@ -23,3 +23,23 @@ The script for building Android assumes the SDK/NDK is running on a Windows plat
 ## TODO
 
 * Statically link GLFW and rename project so the lib is named `Heirloom.Native.dll`
+
+## CMake Example Linking AAudio and OpenSL ES
+
+Keep here for because I have a bad memory.
+
+```cmake
+cmake_minimum_required(VERSION 3.4.1)
+project(miniaudio)
+
+set(CMAKE_BUILD_TYPE RelWithDebInfo)
+
+add_library(miniaudio SHARED ../src/miniaudio.c ../src/miniaudio/extras/stb_vorbis.c)
+
+find_library(opensles-lib OpenSLES)
+find_library(aaudio-lib aaudio)
+find_library(log-lib log)
+
+target_link_libraries(miniaudio 
+    ${log-lib} ${opensles-lib} ${aaudio-lib})
+```
